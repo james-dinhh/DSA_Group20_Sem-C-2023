@@ -1,3 +1,4 @@
+
 import java.util.Arrays;
 
 public class SecretKeyGuesser {
@@ -17,6 +18,7 @@ public class SecretKeyGuesser {
         SecretKey key = new SecretKey();
         int matched;
         while ((matched = key.guess(new String(currentGuess))) != keyLength) {
+            System.out.println("Current guess: " + new String(currentGuess) + ", matched: " + matched);
             updateGuess(matched, key);
         }
         System.out.println("I found the secret key. It is " + new String(currentGuess));
@@ -24,23 +26,22 @@ public class SecretKeyGuesser {
     }
 
     private void updateGuess(int matchedCount, SecretKey key) {
-        char[] previousGuess = currentGuess.clone();
+//        char[] previousGuess = currentGuess.clone();
         for (int i = 0; i < keyLength; i++) {
-            if (!fixed[i]) {
-                for (char c : characters) {
-                    if (c != currentGuess[i]) {
-                        currentGuess[i] = c;
-                        int matched = key.guess(new String(currentGuess));
-                        if (matched > matchedCount) {
-                            fixed[i] = true;
-                            break;
-                        } else {
-                            currentGuess[i] = previousGuess[i]; // Revert if no improvement
-                        }
+            char originalChar = currentGuess[i];
+            for (char c : characters) {
+                if (c != originalChar) {
+                    currentGuess[i] = c;
+                    int newMatchedCount = key.guess(String.valueOf(currentGuess));
+                    if (newMatchedCount > matchedCount) {
+                        // The new character is correct for this position, keep it and break
+                        break;
+                    } else {
+                        // Revert to the original character if no improvement
+                        currentGuess[i] = originalChar;
                     }
                 }
             }
-
         }
     }
 }
