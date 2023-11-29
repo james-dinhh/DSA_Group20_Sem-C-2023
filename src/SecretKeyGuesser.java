@@ -26,7 +26,7 @@ public class SecretKeyGuesser {
     }
 
     private void updateGuess(int matchedCount, SecretKey key) {
-//        char[] previousGuess = currentGuess.clone();
+        char[] previousGuess = currentGuess.clone();
         for (int i = 0; i < keyLength; i++) {
             char originalChar = currentGuess[i];
             for (char c : characters) {
