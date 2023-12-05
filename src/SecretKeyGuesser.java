@@ -13,6 +13,9 @@ public class SecretKeyGuesser {
         Arrays.fill(currentGuess, 'M');
         Arrays.fill(fixed, false);
     }
+    
+    
+    
 
     public void start() {
         SecretKey key = new SecretKey();
