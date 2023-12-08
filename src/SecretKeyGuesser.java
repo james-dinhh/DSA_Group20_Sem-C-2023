@@ -158,7 +158,6 @@ public class SecretKeyGuesser {
         System.out.println("Generated Array: " + resultArray + " (Correct Characters: " + correctCount + ")");
     
         // Compare with the target array
-        int attempts = 5; // Track the number of attempts
         while (correctCount < targetArray.length()) {
             System.out.println("Generated array does not match the target array. Generating a corrected array...");
     
@@ -169,12 +168,9 @@ public class SecretKeyGuesser {
             correctCount = key.comparison(resultArray); //countCorrectCharacters(resultArray, targetArray);
     
             // Print the corrected array and the number of correct characters
-            System.out.println("Corrected Array: " + resultArray + " (Correct Characters: " + correctCount + ")");
-    
-            attempts++; // Increment the number of attempts
-        }
-    
-        System.out.println("Generated array matches the target array.");
-        System.out.println("Number of attempts: " + attempts);
+            if (correctCount < targetArray.length()) {
+                System.out.println("Generated Array: " + resultArray + " (Correct Characters: " + correctCount + ")");
+            }
+        } 
     }
 }
