@@ -1,62 +1,75 @@
 package Project1;
 
-
 public class SecretKeyGuesser {
 
-  String Ostr = "OOOOOOOOOOOO";
-  String Cstr = "CCCCCCCCCCCC";
-  String Hstr = "HHHHHHHHHHHH";
-  String Astr = "AAAAAAAAAAAA";
-  String str =  "MMMMMMMMMMMM";
+  String Ostr = null;
+  String Cstr = null;
+  String Hstr = null;
+  String Astr = null;
+  String Mstr =  null;
+  SecretKey key = null;
+  final int KEY_LENGTH = 12;
+  int currentScore;
+
+  public SecretKeyGuesser(){
+    Ostr = "O".repeat(KEY_LENGTH);
+    Cstr = "C".repeat(KEY_LENGTH);
+    Hstr = "H".repeat(KEY_LENGTH);
+    Astr = "A".repeat(KEY_LENGTH);
+    Mstr =  "M".repeat(KEY_LENGTH);
+  }
+
   public void start() {
     // brute force key guessing
-    SecretKey key = new SecretKey();
-
+    key = new SecretKey();
 
     int OFreq = key.guess(Ostr);
     int CFreq = key.guess(Cstr);
     int HFreq = key.guess(Hstr);
     int AFreq = key.guess(Astr);
-
-    int currentScore=12-OFreq-CFreq-HFreq-AFreq;
-    System.out.printf("Your string contain: %d M, %d O,%d C,%d H,%d A \n",12-OFreq-CFreq-HFreq-AFreq,OFreq,CFreq,HFreq,AFreq);
-
+    int MFreq = KEY_LENGTH - OFreq - CFreq - HFreq - AFreq;
     
-    for(int i=0;i<OFreq;i++){
-      currentScore = guessWithResult(currentScore,'O',key);
+    System.out.printf("Your string contain: %d M, %d O,%d C,%d H,%d A \n", MFreq, OFreq, CFreq, HFreq, AFreq);
+    
+    currentScore = MFreq;
+    for(int i=0; i<OFreq; i++){
+      guessWithResult('O');
     }
-    for(int i=0;i<CFreq;i++){
-      currentScore = guessWithResult(currentScore,'C',key);
+
+    for(int i=0; i<CFreq; i++){
+      guessWithResult('C');
     }
-    for(int i=0;i<HFreq;i++){
-      currentScore = guessWithResult(currentScore,'H',key);
+
+    for(int i=0; i<HFreq; i++){
+      guessWithResult('H');
     }
-    for(int i=0;i<AFreq;i++){
-      currentScore = guessWithResult(currentScore,'A',key);
+
+    for(int i=0; i<AFreq; i++){
+      guessWithResult('A');
     }
-        
-    System.out.println("I found the secret key. It is " + str); 
+    
+    if (currentScore == KEY_LENGTH)
+      System.out.println("I found the secret key. It is " + Mstr); 
+    else
+      System.out.println("Current Score: " + currentScore); 
   }
 
-  int guessWithResult(int score,char update,SecretKey key){
+  void guessWithResult(char update){
 
-    char[] curr = str.toCharArray();
-    char[] result =curr;
+    char[] MstrArray = Mstr.toCharArray();
 
-    for(int i=curr.length-1;i>=0;i--){
-      if(curr [i] == 'M'){
-        result[i] = update;
-        System.out.println("current guess is: "+String.valueOf(result)+"\n");
-        if (key.guess(String.valueOf(result)) > score){
-          score++;
-          str = String.valueOf(result);
-          return score;
-        }else{
-          result[i] = 'M';
+    for(int i=MstrArray.length-1; i>=0; i--){
+      if(MstrArray [i] == 'M'){
+        MstrArray[i] = update;
+        System.out.println("current guess is: " + String.valueOf(MstrArray) + "\n");
+        if (key.guess(String.valueOf(MstrArray)) > currentScore){
+          currentScore ++;
+          Mstr = String.valueOf(MstrArray);
+          return;
+        } else {
+          MstrArray[i] = 'M';
         }
-        
       }
     }
-    return -1;
   };
 }
