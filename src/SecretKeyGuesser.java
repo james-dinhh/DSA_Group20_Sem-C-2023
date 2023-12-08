@@ -25,7 +25,7 @@ class CharLinkedList {
     }
 
     public void shuffle() {
-        Node current = head;
+        //Node current = head;
         int length = length();
 
         for (int i = length - 1; i > 0; i--) {
@@ -154,11 +154,11 @@ public class SecretKeyGuesser {
         String targetArray = key.getCorrectKey();
     
         // Print the initial array and the number of correct characters
-        int correctCount = 2; //comparison(resultArray, targetArray);
+        int correctCount = key.comparison(resultArray); //comparison(resultArray, targetArray);
         System.out.println("Generated Array: " + resultArray + " (Correct Characters: " + correctCount + ")");
     
         // Compare with the target array
-        int attempts = 1; // Track the number of attempts
+        int attempts = 5; // Track the number of attempts
         while (correctCount < targetArray.length()) {
             System.out.println("Generated array does not match the target array. Generating a corrected array...");
     
@@ -166,7 +166,7 @@ public class SecretKeyGuesser {
             resultArray = correctArray(resultArray, targetArray);
     
             // Count the correct characters
-            correctCount = countCorrectCharacters(resultArray, targetArray);
+            correctCount = key.comparison(resultArray); //countCorrectCharacters(resultArray, targetArray);
     
             // Print the corrected array and the number of correct characters
             System.out.println("Corrected Array: " + resultArray + " (Correct Characters: " + correctCount + ")");
