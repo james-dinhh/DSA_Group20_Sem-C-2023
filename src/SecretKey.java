@@ -29,12 +29,13 @@ public class SecretKey {
       }
     }
     if (matched == correctKey.length()) {
+      System.out.println("Generated Array: " + guessedKey);
       System.out.println("Number of guesses: " + counter);
     }
     return matched;
   }
 
   public static void main(String[] args) {
-    new SecretKeyGuesser().start();
+    new guesserkeysecret().start();
   }
 }
