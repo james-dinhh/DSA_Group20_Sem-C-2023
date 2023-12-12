@@ -29,7 +29,7 @@ class CharLinkedList {
         int length = length();
 
         for (int i = length - 1; i > 0; i--) {
-            int j = customRandom(i + 1);
+            int j = (int) (Math.random() * (i + 1)); //customRandom(i + 1);
 
             char temp = getAtIndex(i).data;
             getAtIndex(i).data = getAtIndex(j).data;
@@ -55,9 +55,9 @@ class CharLinkedList {
         return current;
     }
 
-    private int customRandom(int bound) {
-        return (int) (Math.random() * bound);
-    }
+    //private int customRandom(int bound) {
+    //    return (int) (Math.random() * bound);
+    //}
 
     public String toString() {
         String result = "";
@@ -70,7 +70,7 @@ class CharLinkedList {
     }
 }
 
-public class SecretKeyGuesser {
+public class guesserkeysecret {
 
     String Mstr = "MMMMMMMMMMMM";
     String Ostr = "OOOOOOOOOOOO";
@@ -139,10 +139,10 @@ public class SecretKeyGuesser {
         // Find frequencies
         keysecret key = new keysecret();
 
-        int MFreq = key.comparison(Mstr);
-        int OFreq = key.comparison(Ostr);
-        int CFreq = key.comparison(Cstr);
-        int HFreq = key.comparison(Hstr);
+        int MFreq = key.guess(Mstr);
+        int OFreq = key.guess(Ostr);
+        int CFreq = key.guess(Cstr);
+        int HFreq = key.guess(Hstr);
         int AFreq = 12 - MFreq - OFreq - CFreq - HFreq;
         System.out.printf("Your string contain: %d M, %d O, %d C, %d H, %d A \n", MFreq, OFreq, CFreq, HFreq, AFreq);
 
@@ -154,7 +154,7 @@ public class SecretKeyGuesser {
         String targetArray = key.getCorrectKey();
     
         // Print the initial array and the number of correct characters
-        int correctCount = key.comparison(resultArray); //comparison(resultArray, targetArray);
+        int correctCount = key.guess(resultArray); //comparison(resultArray, targetArray);
         System.out.println("Generated Array: " + resultArray + " (Correct Characters: " + correctCount + ")");
     
         // Compare with the target array
@@ -165,7 +165,7 @@ public class SecretKeyGuesser {
             resultArray = correctArray(resultArray, targetArray);
     
             // Count the correct characters
-            correctCount = key.comparison(resultArray); //countCorrectCharacters(resultArray, targetArray);
+            correctCount = key.guess(resultArray); //countCorrectCharacters(resultArray, targetArray);
     
             // Print the corrected array and the number of correct characters
             if (correctCount < targetArray.length()) {
