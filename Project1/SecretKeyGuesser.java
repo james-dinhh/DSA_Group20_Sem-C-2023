@@ -1,10 +1,6 @@
 package Project1;
 
-import java.util.*;
-import static java.lang.Math.max;
-
 public class SecretKeyGuesser {
-    // declare all variables
     String Mstr = null;
     String Ostr = null;
     String Cstr = null;
@@ -25,46 +21,48 @@ public class SecretKeyGuesser {
 
     public void start() {
         key = new SecretKey();
-        // check the number of appearances of each character in the secret key
-        int MFreq = key.guess(Mstr);
-        int OFreq = key.guess(Ostr);
-        int CFreq = key.guess(Cstr);
-        int HFreq = key.guess(Hstr);
-        int AFreq = key.guess(Astr);
+        int[] freqArr = new int[5];
+        String[] charArr = {"M", "O", "C", "H", "A"};
 
-        System.out.printf("Your string contains: %d M,%d O,%d C,%d H,%d A \n", MFreq, OFreq, CFreq, HFreq, AFreq);
+        // check the number of appearances of each character in the secret key
+        freqArr[0] = key.guess(Mstr);
+        freqArr[1] = key.guess(Ostr);
+        freqArr[2] = key.guess(Cstr);
+        freqArr[3] = key.guess(Hstr);
+        freqArr[4] = key.guess(Astr);
+
+        System.out.printf("Your string contains: %d M,%d O,%d C,%d H,%d A \n", freqArr[0], freqArr[1], freqArr[2], freqArr[3], freqArr[4]);
+
+        // bubble sort to sort freqArr and charArr in descending order of frequencies
+        for (int i = 0; i < freqArr.length - 1; i++) {
+            for (int j = 0; j < freqArr.length - i - 1; j++) {
+                if (freqArr[j] < freqArr[j + 1]) {
+                    int temp = freqArr[j];
+                    freqArr[j] = freqArr[j + 1];
+                    freqArr[j + 1] = temp;
+
+                    String tempStr = charArr[j];
+                    charArr[j] = charArr[j + 1];
+                    charArr[j + 1] = tempStr;
+                }
+            }
+        }
 
         // find the character with the most appearances and use the string with only that letter as the first base to guess
-        currentScore = max(MFreq, max(OFreq, max(CFreq, max(HFreq, AFreq))));
-        Map<String, Integer> freqMap = new HashMap<>();
-        freqMap.put("M", MFreq);
-        freqMap.put("O", OFreq);
-        freqMap.put("C", CFreq);
-        freqMap.put("H", HFreq);
-        freqMap.put("A", AFreq);
-
-        highestFreqChar = Collections.max(freqMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+        highestFreqChar = charArr[0];
         highestFreqStr = highestFreqChar.repeat(KEY_LENGTH);
+        currentScore = freqArr[0];
 
         // if a string contains only 1 distinct letter is the correct key, return it immediately
         if (currentScore == KEY_LENGTH) {
             System.out.println("I found the secret key. It is " + highestFreqStr);
-        } else { // arrange the characters in descending order of its number of appearances
-            // sort the map by value in descending order
-            List<Map.Entry<String, Integer>> list = new ArrayList<>(freqMap.entrySet());
-            list.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
-
-            // skip the letter with highest number of appearances
-            for (int i = 1; i < list.size(); i++) {
-                Map.Entry<String, Integer> entry = list.get(i);
-                String character = entry.getKey();
-                int freq = entry.getValue();
-
-                for (int j = 0; j < freq; j++) {
-                    guessWithResult(character.charAt(0));
+        } else { // update the guessed string in descending order of its number of appearances
+            for (int i = 1; i < freqArr.length; i++) {
+                for (int j = 0; j < freqArr[i]; j++) {
+                    guessWithResult(charArr[i].charAt(0));
                 }
             }
-            // when the number of correct positions reach 12, print out the secret key
+            // when the number of correct positions reaches 12, print out the secret key
             if (currentScore == KEY_LENGTH) {
                 System.out.println("I found the secret key. It is " + highestFreqStr);
             } else {
@@ -74,21 +72,21 @@ public class SecretKeyGuesser {
     }
 
     void guessWithResult(char update){
-        char[] strArray = highestFreqStr.toCharArray();
+        char[] strArr = highestFreqStr.toCharArray();
         // checking the string from the last to the first index
-        for(int i = strArray.length - 1; i >= 0; i--){
-            if(strArray[i] == highestFreqChar.charAt(0)){
+        for (int i = strArr.length - 1; i >= 0; i--){
+            if (strArr[i] == highestFreqChar.charAt(0)){
                 // replace each wrong character with another character (based on the order above)
-                strArray[i] = update;
+                strArr[i] = update;
                 // update current guess
-                System.out.println("Current guess is: " + String.valueOf(strArray) + "\n");
+                System.out.println("Current guess is: " + String.valueOf(strArr) + "\n");
                 // if guessing one more character correct, update the base string and number of correct positions
-                if (key.guess(String.valueOf(strArray)) > currentScore){
+                if (key.guess(String.valueOf(strArr)) > currentScore){
                     currentScore++;
-                    highestFreqStr = String.valueOf(strArray);
+                    highestFreqStr = String.valueOf(strArr);
                     return;
                 } else { // if no improvement, keep things as it is
-                    strArray[i] = highestFreqChar.charAt(0);
+                    strArr[i] = highestFreqChar.charAt(0);
                 }
             }
         }
