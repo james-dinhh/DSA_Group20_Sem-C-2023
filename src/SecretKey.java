@@ -1,11 +1,10 @@
-
 public class SecretKey {
     private String correctKey;
-    private int counter;
+    private int counter =0 ;
 
     public SecretKey() {
         // for the real test, your program will not know this
-        correctKey = "CHAMOMOCHAHA";
+        correctKey = "MAMMCHOOCOMA";
         counter = 0;
     }
 
@@ -32,7 +31,6 @@ public class SecretKey {
     }
 
     public static void main(String[] args) {
-
         new SecretKeyGuesser().start();
     }
 }
