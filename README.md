@@ -10,4 +10,4 @@
 ## Github Repository
 - Github URL: https://github.com/james-dinhh/DSA_Group20_Sem-C-2023
 ## Presentation
-- Youtube Video: 
+- Youtube Video: https://youtu.be/LQ66NnMpVcQ
