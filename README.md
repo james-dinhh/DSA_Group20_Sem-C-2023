@@ -1,7 +1,7 @@
 # Data Structures & Algorithms - Group 20
 ## Member
 | Full Name | sID | Contribution Score |
-| :---         |     :---:      |          ---: |
+| :---         | :---: |    ---: |
 |  Dinh Le Hong Tin  | s3932134     | 3    |
 | git diff     | git diff       | git diff      |
 1. Dinh Le Hong Tin - s3932134
