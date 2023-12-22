@@ -8,7 +8,7 @@
 | `Tran Le Bao Ngoc - s3817981` | 3 |
 
 ## Github Repository
-- Github URL: 
+- Github URL: https://github.com/james-dinhh/DSA_Group20_Sem-C-2023
 ## Presentation
 - Slides: 
 - Youtube Video: 
