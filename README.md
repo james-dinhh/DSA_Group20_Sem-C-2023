@@ -1,9 +1,9 @@
 # Data Structures & Algorithms - Group 20
 ## Member
-| Full Name | sID | Contribution Score |
-| :---         | :---: |    ---: |
-|  Dinh Le Hong Tin  | s3932134     | 3    |
-| git diff     | git diff       | git diff      |
+| Full Name - sID | Contribution Score |
+| --- | --- |
+| `Dinh Le Hong Tin - s3932134` | 3 |
+| `git diff` | Show file differences that **haven't been** staged |
 1. Dinh Le Hong Tin - s3932134
 2. Pham Minh Hoang - s3974915
 3. Ngo Minh Hoang - s3926829
